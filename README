@@ -1,0 +1,45 @@
+Configuration File Parser
+README Summary
+Purpose
+Reads a block of key=value configuration text and prints each entry with a capitalized label. Built with Gos standard library — no external packages needed.
+
+Language & Packages
+• Language: Go (Golang) 1.18+
+• Packages: fmt, strings
+• No external dependencies
+
+ Input /  Output
+Input
+Output
+host=localhost
+Host: localhost
+port=8080
+Port: 8080
+debug=true
+Debug: true
+
+
+ Code
+package main
+import ( "fmt"  "strings" )
+func main() {
+    config := "host=localhost\nport=8080\ndebug=true"
+    for _, line := range strings.Split(config, "\n") {
+        parts := strings.SplitN(line, "=", 2)
+        key := strings.ToUpper(parts[0][:1]) + parts[0][1:]
+        fmt.Println(key + ": " + parts[1])
+    }
+}
+
+ How It Works
+• strings.Split breaks the config into individual lines on each \n
+• strings.SplitN splits each line on = into a key and value (max 2 parts)
+• parts[0][:1] takes the first letter of the key and ToUpper capitalizes it
+• parts[0][1:] keeps the rest of the key unchanged
+• Println joins and prints the capitalized key, colon, and value
+
+ How to Run
+• Save the file as main.go
+go run main.go
+
+— End of README —
